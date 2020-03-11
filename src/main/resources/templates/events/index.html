@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Coding Events</title>
-</head>
-<body>
+<head th:replace="fragments :: head"></head>
+<body class = "container">
 
 <h1>All Events</h1>
 
-<ul>
-    <th:block th:each="event : ${events}">
-        <li th:text="${event}"></li>
+<table class = "table table-dark">
+    <th:block th:each="event : ${events}" scope = "row">
+        <tr>
+            <td th:text="${event.key}"></td>
+            <td th:text="${event.value}"></td>
+        </tr>
     </th:block>
-</ul>
+    <tr>
+        <td scope = "row"> hotspot:</td>
+        <td th:replace="fragments :: hotSpot"></td>
+    </tr>
+</table>
 
 </body>
 </html>
