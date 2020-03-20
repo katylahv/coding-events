@@ -3,17 +3,26 @@
 <head th:replace="fragments :: head"></head>
 <body class ="container">
 <header th:replace="fragments :: navigation"></header>
-
+<p th:text="${errorMsg}" style="color:red;"></p>
 <form method="post">
     <div class="form-group">
         <label>Name
-    <input type="text" name="name" class = "form-control">
+    <input th:field="${events.name}" class = "form-control">
         </label>
+        <p class="error" th:errors="${events.name}"></p>
     </div>
 
     <div class="form-group">
         <label>Description
-            <input type="text" name="description" class = "form-control">
+            <input th:field="${events.description}" class = "form-control">
+            <p class="error" th:errors="${events.description}"></p>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>Email
+            <input th:field="${events.contactEmail}" class = "form-control">
+            <p class="error" th:errors="${events.contactEmail}"></p>
         </label>
     </div>
 

@@ -4,8 +4,10 @@ import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.models.Events;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +28,19 @@ public class EventController {
     @GetMapping("create")
     public String renderCreateEventForm(Model model){
         model.addAttribute("title", "Create Event");
+        model.addAttribute(new Events());
         return "events/create";
     }
     //lives at /events/create
     @PostMapping("create")
-    public String createEvent(@ModelAttribute Events newEvent){
-        EventData.add(newEvent);
-        return "redirect:"; // go to diff page
+    public String createEvent(@ModelAttribute @Valid Events newEvent,
+                              Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Create Event");
+            return "events/create";
+        }
+            EventData.add(newEvent);
+            return "redirect:"; // go to diff page
     }
 
     @GetMapping("delete")
@@ -59,10 +67,12 @@ public class EventController {
     }
 
     @PostMapping("/edit/{id}")
-    public String processEditForm(int id, String name, String description){
+    public String processEditForm(int id, String name, String description, Model model){
             EventData.getById(id).setName(name);
             EventData.getById(id).setDescription(description);
-        return "redirect:";
+        model.addAttribute("title", "All Events");
+        model.addAttribute("events", EventData.getAll());
+        return "events/index";
     }
 
 }
