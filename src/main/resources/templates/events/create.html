@@ -4,28 +4,38 @@
 <body class ="container">
 <header th:replace="fragments :: navigation"></header>
 <p th:text="${errorMsg}" style="color:red;"></p>
+
 <form method="post">
     <div class="form-group">
         <label>Name
-    <input th:field="${events.name}" class = "form-control">
+    <input th:field="${event.name}" class = "form-control">
         </label>
-        <p class="error" th:errors="${events.name}"></p>
+        <p class="error" th:errors="${event.name}"></p>
     </div>
 
     <div class="form-group">
         <label>Description
-            <input th:field="${events.description}" class = "form-control">
-            <p class="error" th:errors="${events.description}"></p>
+            <input th:field="${event.description}" class = "form-control">
+            <p class="error" th:errors="${event.description}"></p>
         </label>
     </div>
 
     <div class="form-group">
         <label>Email
-            <input th:field="${events.contactEmail}" class = "form-control">
-            <p class="error" th:errors="${events.contactEmail}"></p>
+            <input th:field="${event.contactEmail}" class = "form-control">
+            <p class="error" th:errors="${event.contactEmail}"></p>
         </label>
     </div>
-
+    <div class = "form-group">
+        <label>Type
+            <select th:field="${event.type}">
+                <option th:each="type : ${types}"
+                        th:value="${type}"
+                        th:text="${type.displayName}"
+                ></option>
+            </select>
+        </label>
+    </div>
     <div class = "form-group">
         <input type="submit" value="Create" class = "btn btn-success">
     </div>
